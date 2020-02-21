@@ -1,0 +1,11 @@
+[package]
+name = "analysis"
+version = "0.1.0"
+authors = ["Colin Daniels <colin.r.daniels@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+lattice_rl = { path = "../" }
+nalgebra = "0.19"
+itertools = "0.8"
+rayon = "1.3"

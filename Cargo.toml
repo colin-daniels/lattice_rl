@@ -1,0 +1,24 @@
+[package]
+name = "lattice_rl"
+version = "0.1.0"
+authors = ["Colin Daniels <colin.r.daniels@gmail.com>"]
+edition = "2018"
+repository = "https://github.com/colin-daniels/lattice_rl"
+license = "MIT"
+
+description = "Library for analyzing grid-world environments in reinforcement learning"
+readme = "README.md"
+keywords = ["ml","rl","machine","reinforcement","learning"]
+categories = ["mathematics","science","science::robotics","simulation"]
+
+[badges.maintenance]
+status = "experimental"
+
+[dependencies]
+rayon = "1.3"
+itertools = "0.8"
+nalgebra = "0.19"
+lodepng = "2.5"
+
+[workspace]
+members = ["analysis"]
