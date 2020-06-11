@@ -22,3 +22,4 @@ lodepng = "2.5"
 
 [workspace]
 members = ["analysis"]
+default-members = ["analysis"]
