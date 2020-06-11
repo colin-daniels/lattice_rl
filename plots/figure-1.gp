@@ -190,52 +190,59 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 
 load '../viridis.pal'
 
-tm = 0.95
-bm = 0.15
-mp = 0.05
+mp = 0.04
 
-lm = 0.125
-rm = 0.75
+lm = 0.0875
+rm = 0.875
+bm = 0.25
+tm = 0.98
 
-set lmargin at screen lm
-set rmargin at screen rm
+cb_margin = 0.0125
+cb_width = 0.025
+
+set tmargin at screen tm
+set bmargin at screen bm
 
 set yrange [0:1]
-set ylabel '$p_+$' offset 1.25,0
-set ytics format "%.1f" offset 0.5
+set ylabel '$\pi(a = +1\mid\theta_t)$' offset 0.75,0
+set ytics format "%.1f" offset 0,0
 
 set xrange [0:800]
 set xtics 0, 200, 800
 set x2tics 0, 200, 800
 
-set cbrange [1e-5:1]
+set cbrange [1e-5:1e-1]
 set logscale cb
-set cbtics in format "$10^{%L}$" offset -0.5
-set cblabel '$\Pr{\pi(a = +1\mid\theta_t) = p_+}$'
+set cbtics in format "$10^{%L}$" offset -0.5,0
+# set cblabel '$\Pr\{\pi(a = +1\mid\theta_t) = p_+\}$'
+set cblabel 'Probability Density'
 
-set tmargin at screen tm
-set bmargin at screen ((tm + bm + mp) / 2)
+set lmargin at screen lm
+set rmargin at screen ((lm + rm - mp) / 2)
 unset colorbox
 
 lx = 550
 ly = 0.6
 
-set term cairolatex pdf size 3.25in,3.25in
+set term cairolatex pdf size 14cm,5cm
 set output 'transitions-plot.tex'
 
-set multiplot layout 2,1;
+set multiplot layout 1,2;
 
-set xtics format ""
-unset xlabel
+# set xtics format ""
+set xtics format "%g" offset 0,0.1
+set xlabel "PG Iteration ($t$)" offset 0,0.5
+
 plot 'fig1-time-evo-0.50.bin' binary matrix u 2:($1/1024.0):3 w image
 
-set colorbox user origin (rm + mp*0.75),bm size 0.05,(tm-bm) 
-set tmargin at screen ((tm + bm - mp) / 2)
-set bmargin at screen bm
+set colorbox user origin (rm + cb_margin),bm size cb_width,(tm-bm) 
+set lmargin at screen ((lm + rm + mp) / 2)
+set rmargin at screen rm
 
-set xtics format "%g" offset 0,0.25
-set xlabel "$t$ (SGA Iteration)" 
-plot 'fig1-time-evo-0.56.bin' binary matrix u 2:($1/1024.0):3 w image
+unset ylabel
+set ytics format ""
+
+plot 'fig1-time-evo-0.56.bin' binary matrix u 2:($1/1024.0):($3 == 1.0 ? NaN : $3) w image
 
 unset multiplot
 unset output

@@ -40,9 +40,6 @@ cb_h = 0.04
 cb_x = lm
 cb_w = rm - lm
 
-set lmargin at screen lm
-set rmargin at screen rm
-
 set cbrange [1:8]
 set xrange [0:1]
 set xtics 0, 0.25, 1.0
@@ -52,41 +49,48 @@ unset grid
 unset xlabel
 unset object
 
-set term cairolatex pdf size 3.25in,4in; set output '1d-value-grad.tex'
-set multiplot layout 2,1
+set term cairolatex pdf size 14cm,5.5cm; set output '1d-value-grad.tex'
+set multiplot layout 1,2
 
 set yrange [-22.5:12.5]
-set ytics -20, 5, 10
+set ytics -20, 5, 10  format "\\small %g" offset 0.5,0
 set y2tics -20, 5, 10 format ""
-set ylabel "$v_{\\pi,9,9}(s)$" offset 1,0
+set ylabel "$v_{\\pi}(s)$" offset 4,0
 
-set tmargin at screen tm
-set bmargin at screen ((tm - bm) / 2 + bm)
-unset xtics
 unset colorbox
 
-set border 14
+set border 15
+
+set lmargin at screen 0.07
+set rmargin at screen 0.49
+
+set xlabel "$p$" offset 0,0.5
+set xtics out nomirror offset 0,0.325
+
 plot 0 lc rgb '#444444' dt '_', 'value-fn-1d.dat' u 1:2:4 lw 3 lc palette dt solid
 
 set border 15
 unset colorbox
 
 set tics front
-set xlabel "$p := \\pi(a = +1)$" offset 0,0.5
-set xtics out nomirror offset 0,0.325
+# set xlabel "$p := \\pi(a = +1)$" offset 0,0.5
+# set xtics out nomirror offset 0,0.325
 set yrange [-80:135] noreverse writeback
-set ytics -60, 30, 120
+set ytics -60, 30, 120 format "\\small %g" offset 0.5,0
 set y2tics -60, 30, 120 format ""
-set ylabel "$\\partial_{p}\\; v_{\\pi,9,9}(s)$" offset 1,0
+set ylabel "$\\partial_{p}\\; v_{\\pi}(s)$" offset 4,0
 
-set tmargin at screen ((tm - bm) / 2 + bm)
-set bmargin at screen bm
+# set tmargin at screen ((tm - bm) / 2 + bm)
+# set bmargin at screen bm
 
 set obj 4 rect from 0, -80 to 1,0 fc rgb '#DDDDDD' fs pattern 6 noborder back
 
 LABEL="$\\partial_p v_\\pi \\leq 0$"
 set obj 10 rect at 0.75,-30 size char strlen("P V <= 0"), char 1.5 fc rgb "white"
 set label 10 LABEL at 0.75,-30 front center
+
+set lmargin at screen (0.5 + 0.075)
+set rmargin at screen 1
 
 plot 0 lc rgb '#444444' dt '_', 'value-fn-1d.dat' u 1:3:4 lw 3 lc palette dt solid
 unset multiplot

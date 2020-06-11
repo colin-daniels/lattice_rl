@@ -29,8 +29,8 @@ set tics front
 load '../moreland.pal'
 set palette negative
 
-lm = 0.1
-rm = 0.91
+lm = 0.092
+rm = 0.90
 tm = 0.95
 bm = 0.2
 psep = 0.02
@@ -42,26 +42,26 @@ set bmargin at screen bm
 set tmargin at screen tm
 
 set cbrange [0:1]
-set cblabel "$\\Pr\\{\\pi(+1 \\mid \\theta_{\\infty}) = 1.0\\}$"
-set cbtics out nomirror 
+set cblabel "Convergence Probability"
+set cbtics out nomirror offset -0.25,0
 
 set xrange [0:1]
 set xtics out nomirror 0, 0.25, 1.0
 set x2tics in 0, 0.25, 1.0 format ""
-set xlabel "$\\pi(+1 \\mid \\theta_{0})$" offset 0,0.25
+set xlabel "$\\pi(a = +1 \\mid \\theta)$" offset 0,0.25
 
 set yrange [-5:1]
-set ytics out nomirror -5, 1, 1 format "$10^{%g}$"
+set ytics out nomirror -5, 1, 1 format "$10^{%g}$" offset 0.5,0
+set ylabel "PG Learning Rate ($\\alpha$)" offset 1.4,0
 set y2tics in -5, 1, 1 format ""
-set ylabel "Step Size" offset 0,0
 
-set term cairolatex color pdf size 6.75in,(pratio * 6.75)in; 
+set term cairolatex color pdf size 14cm,(pratio * 14)cm; 
 set output 'convergence-prob-multi.tex'
 
 set multiplot layout 1, 3;
 unset colorbox
 
-lx = 0.125 + .125/2
+lx = 0.125 + .125/1.5
 ly = -4.25
 set obj 10 rect at lx,ly size char strlen("s0 = 0"), char 1.5 fs empty border lc rgb 'white' front lw 4
 set label 10 "\\textcolor{white}{$s_0 = 1$}" at lx,ly front center
