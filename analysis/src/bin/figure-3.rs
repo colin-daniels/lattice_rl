@@ -1,11 +1,14 @@
 use lattice_rl::env::GamblersEnv;
 use lattice_rl::util::linspace;
 use std::iter::once;
+use std::fs::File;
+use std::io::{Write, Result};
 
-fn main() {
+fn main() -> Result<()> {
     let samples = 100;
     let numerical_diff_step = 1e-6;
 
+    let mut file = File::create("value-fn-1d.dat")?;
     for start in (1..9).rev() {
         let env = GamblersEnv::new(
             start, // s_0
@@ -24,8 +27,10 @@ fn main() {
         // the 1e-4's are to avoid issues with endpoints + the fact that this linspace function
         // does not include the endpoint at 1.0
         for p in linspace(1e-4..1.0, samples).chain(once(1.0 - 1e-4)) {
-            print!("{} {} {} {}\n", p, value_fn(p), gradient_fn(p), start);
+            write!(file, "{} {} {} {}\n", p, value_fn(p), gradient_fn(p), start)?;
         }
-        print!("\n\n");
+        write!(file, "\n\n")?;
     }
+
+    Ok(())
 }
