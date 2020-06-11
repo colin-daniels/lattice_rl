@@ -12,6 +12,27 @@
 #    	immediate help:   type "help"  (plot window: hit 'h')
 # set terminal qt 0 font "Sans,9"
 # set output
+
+# first we need to generate some contour plots
+DATAFILES = system("printf '%s\n' value*.txt")
+do for [file in DATAFILES] {
+    set view map
+    unset surface
+    set contour
+
+    set samples 1000
+    set isosamples 1000
+
+    set cntrparam levels incr -12,1,6
+    set xrange [0:1]
+    set yrange [0:1]
+
+    set table file.'.tab'
+    splot file w lines
+    unset table
+}
+
+
 unset clip points
 set clip one
 unset clip two
@@ -166,7 +187,8 @@ set fontpath
 set psdir
 set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap v5
 GNUTERM = "qt"
-## Last datafile plotted: "value-3d-(1-4-0).txt"
+
+
 set yrange [0:1]
 set xrange [0:1]
 
@@ -177,8 +199,6 @@ set border lw 2
 unset border
 unset tics
 
-
-
 apex_x = sqrt(3)/2
 apex_y = 0.5
 
@@ -188,22 +208,12 @@ set object 1 fillstyle empty border lw 2 lc rgb 'black' front
 obj_n = 2
 ts = 8.0
 divs = 5.0
-# 
-# # set label "\\large $y$" at apex_x/2,apex_y/2 right offset -6,1.75
-# # set label "\\large $x$" at 1/2.0,0 center offset 0,-3
-# # set label "\\large $z$" at (1 - apex_x/2), apex_y/2 left offset 6,1.75
-# 
 
 dx = apex_x / divs 
 dy = apex_y / divs
 dxt = dy / ts
 dyt = dx / ts
 d1t = 1.0 / (ts * divs)
-
-
-# set label "\\large $p_x$" at apex_x/2,apex_y/2 right offset 4,-1.75
-# set label "\\large $p_y$" at apex_x/2, (1 - apex_y/2) left offset 2.3,2.1
-# set label "\\large $p_z$" at 0,0.5 center offset -5,0.5
 
 set label "$p_x$" at apex_x/2,apex_y/2 right offset 3,-1.75
 set label "$p_y$" at apex_x/2, (1 - apex_y/2) left offset 1.3,2.1
@@ -269,7 +279,6 @@ set cbtics -12,1,10
 set cbrange [-12:-9.5]
 set output 'value-3d-4-2-0.tex'
 set label 20 "\\large \\textbf{(a)}" at screen 0.01,0.95 left
-# FIXME: contours
 plot 'value-3d-(2-2).txt' w image, 'value-3d-(2-2).txt.tab' w lines lc rgb 'white'
 set output
 
@@ -281,21 +290,3 @@ set output 'value-3d-2-1-0.tex'
 set label 20 "\\large \\textbf{(c)}" at screen 0.01,0.95 left
 plot 'value-3d-(1-1).txt' w image, 'value-3d-(1-1).txt.tab' w lines lc rgb 'white'
 set output
-
-# set object 100 polygon from 0,0 to apex_x,apex_y to 0,1 to 0,0
-# set object 100 fillstyle solid fc rgb '#440356' back
-# plot 'grad-3d-(2-2-0).txt' u ($1-$3):($2-$4):($3*$5/12):($4*$5/12):5 w vectors  lc palette lw 2.5
-# plot 'value-3d-(2-2-0).txt' w image, 'grad-3d-(2-2-0).txt' u ($1-$3):($2-$4):($3*$5/12):($4*$5/12):6 w vectors lc rgb 'white' lw 2
- 
- 
-# set multiplot layout 4,4;
-# pltit="plot infile w image, infile.'.tab' w lines lc rgb 'white'"
-# 
-# infile='value-3d-(1-4-0).txt'; @pltit; plot NaN; plot NaN; plot NaN; 
-# infile='value-3d-(1-3-0).txt'; @pltit; infile='value-3d-(2-3-0).txt'; @pltit; plot NaN; plot NaN; 
-# infile='value-3d-(1-2-0).txt'; @pltit; infile='value-3d-(2-2-0).txt'; @pltit; infile='value-3d-(3-2-0).txt'; @pltit; plot NaN;
-# infile='value-3d-(1-1-0).txt'; @pltit; infile='value-3d-(2-1-0).txt'; @pltit; infile='value-3d-(3-1-0).txt'; @pltit; infile='value-3d-(4-1-0).txt'; @pltit;
-# unset multiplot
-
-
-# set output
