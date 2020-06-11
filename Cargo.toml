@@ -1,9 +1,9 @@
 [package]
 name = "lattice_rl"
 version = "0.1.0"
-authors = ["Colin Daniels <colin.r.daniels@gmail.com>"]
+authors = ["Anonymous <anonymous@gmail.com>"]
 edition = "2018"
-repository = "https://github.com/colin-daniels/lattice_rl"
+repository = "https://github.com/<user>/<repo>"
 license = "MIT"
 
 description = "Library for analyzing grid-world environments in reinforcement learning"
